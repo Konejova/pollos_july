@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('orderlines')]" position="replace">
+            <div class="orderlines">
+                <div style="font-size: 20px; text-align: center">
+                    <strong>Ticket #<t t-esc="receipt.name.split('-')[2]"></t></strong>
+                </div>
+                <br/>
+                <table class='receipt-orderlines'>
+                    <colgroup>
+                        <col width='20%'/>
+                        <col width='35%'/>
+                        <col width='20%'/>
+                        <col width='20%'/>
+                    </colgroup>
+                    <tr style="border-bottom: 1px dashed black;border-top: 1px dashed black;">
+                        <th style='text-align:center'>Cant.</th>
+                        <th style='text-align:left'>Descripcion</th>
+                        <th style='text-align:center'>P.U</th>
+                        <th style='text-align:center'>Total</th>
+                    </tr>
+                    <tr t-foreach="orderlines" t-as="orderline" t-key="orderline.id">
+                        <td style='text-align:center'>
+                            <t t-esc="orderline.get_quantity()"/>
+                        </td>
+                        <td>
+                            <t t-esc="orderline.get_product().display_name"/>
+                            <t t-if="orderline.get_discount() > 0">
+                                <div class="pos-disc-font">
+                                    With a <t t-esc="orderline.get_discount()"/>% discount
+                                </div>
+                            </t>
+                        </td>
+                        <td style='text-align:center'>
+                            <t t-esc="env.pos.format_currency_no_symbol(orderline.get_unit_display_price())"></t>
+                        </td>
+                        <td style='text-align:right'>
+                            <t t-esc="env.pos.format_currency_no_symbol(orderline.get_price_with_tax())"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </xpath>
+    </t>
+</templates>
