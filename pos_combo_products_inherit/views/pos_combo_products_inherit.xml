@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="pos_combo_groups_from_view_inherit" model="ir.ui.view">
+            <field name="name">pos.combo.groups.from.view.inherit</field>
+            <field name="model">combo.groups</field>
+            <field name="inherit_id" ref="pos_combo_products.pos_combo_groups_from_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='combo_products_ids']" position="after">
+                    <field name="company_id" groups="base.group_multi_company"></field>
+                </xpath>
+            </field>
+        </record>
+        <record id="wk_pos_combo_products_form_view_inherit" model="ir.ui.view">
+            <field name="name">wk.pos.combo.products.form.view</field>
+            <field name="model">combo.products</field>
+            <field name="inherit_id" ref="pos_combo_products.wk_pos_combo_products_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="company_id" groups="base.group_multi_company"></field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

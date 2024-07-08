@@ -6,7 +6,6 @@
                 <div style="font-size: 20px; text-align: center">
                     <strong>Ticket #<t t-esc="receipt.name.split('-')[2]"></t></strong>
                 </div>
-                <br/>
                 <table class='receipt-orderlines'>
                     <colgroup>
                         <col width='20%'/>
@@ -42,5 +41,30 @@
                 </table>
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('receipt-change')]" position="attributes">
+            <attribute name="style">display:none!important;</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='isTaxIncluded']" position="replace"></xpath>
+        <xpath expr="//t[@t-if='receipt.total_discount']" position="replace"></xpath>
+        <xpath expr="//div[hasclass('pos-receipt')]/div[hasclass('pos-receipt-order-data')]" position="attributes">
+            <attribute name="style">display:none!important;</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('pos-receipt-contact')]" position="attributes">
+            <attribute name="style">display:none!important;</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='!receipt.company.logo']" position="replace"></xpath>
+        <xpath expr="//t[@t-if='receipt.company.logo']" position="replace"></xpath>
+        <xpath expr="//div[hasclass('pos-receipt-center-align')]" position="attributes">
+            <attribute name="style">display:none!important;</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('after-footer')]" position="attributes">
+            <attribute name="style">display:none!important;</attribute>
+        </xpath>
+        <xpath expr="//t[@t-foreach='receipt.paymentlines']" position="replace"></xpath>
+        <xpath expr="//br[1]" position="replace"></xpath>
+        <xpath expr="//br[3]" position="replace"></xpath>
+        <xpath expr="//br[4]" position="replace"></xpath>
+        <xpath expr="//br[5]" position="replace"></xpath>
+
     </t>
 </templates>
