@@ -239,7 +239,57 @@
                     </t>
     
                     <br/>
-    
+                    <t id="closing_session">
+                        <h3 style="">Gastos</h3>
+                        <table  class="table table-sm" style="">
+                            <thead><tr>
+                                <th>Nombre</th>
+                                <th>Monto</th>
+                            </tr></thead>
+                            <t t-set="total_cash_control" t-value="0"></t>
+                            <tbody>
+                                <t t-foreach="payments" t-as="method">
+                                    <t t-if="method['count']">
+                                        <tr t-if="payments" t-foreach="method['cash_in_out']" t-as="move">
+                                            <td><t t-esc="move['name']"/></td>
+                                            <td>
+                                                <t t-if="currency['position']">
+                                                    <t t-esc="abs(move['amount'])" t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
+                                                    <t t-set="total_cash_control" t-value="total_cash_control + abs(move['amount'])"></t>
+                                                </t>
+                                                <t t-else="" >
+                                                    <t t-esc='currency["symbol"]' /><t t-esc="abs(move['amount'])" t-options="{'widget': 'float', 'precision': currency['precision']}"/>
+                                                    <t t-set="total_cash_control" t-value="total_cash_control + abs(move['amount'])"></t>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                                <tr>
+                                    <td style="background-color: #b1b1b1;"><strong>Total</strong></td>
+                                    <td style="background-color: #b1b1b1;">
+                                        <t t-if="currency['position']">
+                                            <t t-esc="abs(total_cash_control)" t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
+                                        </t>
+                                        <t t-else="" >
+                                            <t t-esc='currency["symbol"]' /><t t-esc="abs(total_cash_control)" t-options="{'widget': 'float', 'precision': currency['precision']}"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!--t t-if="opening_note or closing_note">
+                            <t t-if="opening_note" id="opening_note">
+                                <strong>Opening of session note:</strong>
+                                <t t-esc="opening_note" />
+                            </t>
+                            <br/>
+                            <t t-if="closing_note" id="closing_note">
+                                <strong>End of session note:</strong>
+                                <t t-esc="closing_note" />
+                            </t>
+                        </t-->
+                    </t>
                     <t t-if="payments" id="payments">
                         <t t-if="payments" id="other_payments">
                             <h3>Pagos</h3>
@@ -340,57 +390,7 @@
                     </table>
                 </t>
 
-                <t id="closing_session">
-                    <h3 style="">Gastos</h3>
-                    <table  class="table table-sm" style="">
-                        <thead><tr>
-                            <th>Nombre</th>
-                            <th>Monto</th>
-                        </tr></thead>
-                        <t t-set="total_cash_control" t-value="0"></t>
-                        <tbody>
-                            <t t-foreach="payments" t-as="method">
-                                <t t-if="method['count']">
-                                    <tr t-if="payments" t-foreach="method['cash_in_out']" t-as="move">
-                                        <td><t t-esc="move['name']"/></td>
-                                        <td>
-                                            <t t-if="currency['position']">
-                                                <t t-esc="abs(move['amount'])" t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
-                                                <t t-set="total_cash_control" t-value="total_cash_control + abs(move['amount'])"></t>
-                                            </t>
-                                            <t t-else="" >
-                                                <t t-esc='currency["symbol"]' /><t t-esc="abs(move['amount'])" t-options="{'widget': 'float', 'precision': currency['precision']}"/>
-                                                <t t-set="total_cash_control" t-value="total_cash_control + abs(move['amount'])"></t>
-                                            </t>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </t>
-                            <tr>
-                                <td style="background-color: #b1b1b1;"><strong>Total</strong></td>
-                                <td style="background-color: #b1b1b1;">
-                                    <t t-if="currency['position']">
-                                        <t t-esc="abs(total_cash_control)" t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
-                                    </t>
-                                    <t t-else="" >
-                                        <t t-esc='currency["symbol"]' /><t t-esc="abs(total_cash_control)" t-options="{'widget': 'float', 'precision': currency['precision']}"/>
-                                    </t>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!--t t-if="opening_note or closing_note">
-                        <t t-if="opening_note" id="opening_note">
-                            <strong>Opening of session note:</strong>
-                            <t t-esc="opening_note" />
-                        </t>
-                        <br/>
-                        <t t-if="closing_note" id="closing_note">
-                            <strong>End of session note:</strong>
-                            <t t-esc="closing_note" />
-                        </t>
-                    </t-->
-                </t>
+                
 
             </t>
         </xpath>
